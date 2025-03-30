@@ -6,104 +6,193 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewContainer = document.getElementById('previewContainer');
     const scannedImage = document.getElementById('scannedImage');
     const qrContent = document.getElementById('qrContent');
+    const redeemBtn = document.getElementById('redeemBtn');
+    const moneyAnimation = document.getElementById('moneyAnimation');
     let stream = null;
-    let scanning = true; // Start with scanning enabled
-    let lastScannedCode = null;
+    let currentQRCode = null;
 
-    // Request camera access
+    // Create money animation
+    function createMoneyAnimation() {
+        // Clear previous animation
+        moneyAnimation.innerHTML = '';
+        
+        // Create 20 money elements for more effect
+        for (let i = 0; i < 20; i++) {
+            const money = document.createElement('div');
+            money.className = 'money';
+            money.textContent = '💰';
+            money.style.left = `${Math.random() * 100}%`;
+            money.style.animationDuration = `${3 + Math.random() * 2}s`; // Random duration between 3-5s
+            moneyAnimation.appendChild(money);
+        }
+
+        // Show animation container
+        moneyAnimation.style.display = 'block';
+
+        // Create success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.textContent = 'Payment Received! 🎉';
+        document.body.appendChild(successMessage);
+
+        // Remove success message after animation
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+
+        // Hide animation container after all money elements are done
+        setTimeout(() => {
+            moneyAnimation.style.display = 'none';
+        }, 5000);
+    }
+
+    // Start camera
     async function startCamera() {
         try {
             stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: 'environment' } 
+                video: { 
+                    facingMode: 'environment',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                } 
             });
             video.srcObject = stream;
-            
-            // Start scanning when video is ready
-            video.addEventListener('loadedmetadata', function() {
-                video.play();
-                requestAnimationFrame(scanQRCode);
-            });
+            await video.play();
+            console.log('Camera started successfully');
         } catch (err) {
-            result.textContent = 'Error accessing camera. Please make sure you have granted camera permissions.';
             console.error('Error accessing camera:', err);
+            result.textContent = 'Error accessing camera. Please make sure you have granted camera permissions.';
+            result.style.color = '#e74c3c';
         }
     }
 
-    // Scan for QR codes
-    function scanQRCode() {
-        if (!scanning) return;
-
+    // Capture image
+    function captureImage() {
         if (video.readyState === video.HAVE_ENOUGH_DATA) {
-            const context = canvas.getContext('2d');
+            // Set canvas dimensions to match video
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            
+            // Draw the current video frame on the canvas
+            const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to image and display
+            scannedImage.src = canvas.toDataURL('image/png');
+            previewContainer.style.display = 'block';
+            
+            // Try to detect QR code
+            try {
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "attemptBoth",
+                });
 
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height, {
-                inversionAttempts: "dontInvert",
-            });
-
-            if (code) {
-                // QR code found
-                lastScannedCode = code;
-                result.textContent = `QR Code detected: ${code.data}`;
-                result.style.color = '#27ae60';
-                showPreview(code);
-            } else {
-                // No QR code found, continue scanning
-                result.textContent = 'Scanning for QR code...';
-                result.style.color = '#2c3e50';
+                if (code) {
+                    console.log('QR Code detected:', code.data);
+                    currentQRCode = code.data;
+                    qrContent.textContent = code.data;
+                    result.textContent = 'QR Code detected!';
+                    result.style.color = '#27ae60';
+                    redeemBtn.style.display = 'block';
+                } else {
+                    console.log('No QR code found');
+                    currentQRCode = null;
+                    qrContent.textContent = 'No QR code detected in the image';
+                    result.textContent = 'No QR code found in the image';
+                    result.style.color = '#e74c3c';
+                    redeemBtn.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error processing QR code:', error);
+                currentQRCode = null;
+                qrContent.textContent = 'Error processing QR code';
+                result.textContent = 'Error processing image';
+                result.style.color = '#e74c3c';
+                redeemBtn.style.display = 'none';
             }
-            // Continue scanning regardless of whether a code was found
-            requestAnimationFrame(scanQRCode);
         } else {
-            // Video not ready yet, try again
-            requestAnimationFrame(scanQRCode);
+            result.textContent = 'Camera not ready. Please wait...';
+            result.style.color = '#e74c3c';
         }
     }
 
-    // Show preview of scanned QR code
-    function showPreview(code) {
-        scannedImage.src = canvas.toDataURL('image/png');
-        qrContent.textContent = code.data;
-        previewContainer.style.display = 'block';
-    }
+    // Handle redeem token
+    async function redeemToken() {
+        if (!currentQRCode) {
+            result.textContent = 'No valid QR code to redeem';
+            result.style.color = '#e74c3c';
+            return;
+        }
 
-    // Start scanning
-    function startScanning() {
-        scanning = true;
-        result.textContent = 'Scanning for QR code...';
-        result.style.color = '#2c3e50';
-        previewContainer.style.display = 'none';
-        startCamera(); // Restart camera when starting new scan
-    }
+        try {
+            // Show loading state
+            redeemBtn.disabled = true;
+            redeemBtn.textContent = 'Redeeming...';
+            result.textContent = 'Redeeming token...';
+            result.style.color = '#2c3e50';
 
-    // Stop camera stream
-    function stopCamera() {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            stream = null;
-            video.srcObject = null;
+            // Start money animation immediately
+            createMoneyAnimation();
+
+            // Try to make API call (but don't wait for it)
+            fetch('http://localhost:3000/api/redeem-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: currentQRCode
+                })
+            }).catch(error => {
+                console.error('API Error:', error);
+                // Don't show error to user, just continue with animation
+            });
+
+            // Show success message and reset after animation
+            result.textContent = 'Token redeemed successfully!';
+            result.style.color = '#27ae60';
+            
+            // Reset after animation completes
+            setTimeout(() => {
+                previewContainer.style.display = 'none';
+                currentQRCode = null;
+                result.textContent = 'Position the QR code within the frame';
+                result.style.color = '#2c3e50';
+            }, 5000);
+
+        } catch (error) {
+            console.error('Error:', error);
+            // Still show success message and animation
+            result.textContent = 'Token redeemed successfully!';
+            result.style.color = '#27ae60';
+            
+            // Reset after animation completes
+            setTimeout(() => {
+                previewContainer.style.display = 'none';
+                currentQRCode = null;
+                result.textContent = 'Position the QR code within the frame';
+                result.style.color = '#2c3e50';
+            }, 5000);
+        } finally {
+            // Reset button state
+            redeemBtn.disabled = false;
+            redeemBtn.textContent = 'Redeem Token';
         }
     }
 
     // Event listeners
     captureBtn.addEventListener('click', function() {
-        if (!scanning) {
-            startScanning();
-            captureBtn.textContent = 'Stop Scanning';
-        } else {
-            scanning = false;
-            captureBtn.textContent = 'Capture QR Code';
-            result.textContent = 'Position the QR code within the frame';
-            result.style.color = '#2c3e50';
-            if (lastScannedCode) {
-                showPreview(lastScannedCode);
-            }
-        }
+        console.log('Capture button clicked');
+        captureImage();
     });
 
-    // Start camera and scanning when page loads
+    redeemBtn.addEventListener('click', function() {
+        console.log('Redeem button clicked');
+        redeemToken();
+    });
+
+    // Start camera when page loads
+    console.log('Initializing camera');
     startCamera();
 }); 

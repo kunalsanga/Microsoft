@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="qr-scan.css">
 </head>
 <body>
+    <div class="money-animation-container" id="moneyAnimation"></div>
     <div class="container">
         <h1>QR Code Scanner</h1>
         <div class="scanner-container">
@@ -24,6 +25,7 @@
             <h2>Scanned QR Code</h2>
             <img id="scannedImage" alt="Scanned QR Code">
             <p id="qrContent"></p>
+            <button id="redeemBtn" class="redeem-btn">Redeem Token</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>

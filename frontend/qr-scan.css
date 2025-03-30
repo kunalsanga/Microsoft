@@ -145,4 +145,95 @@ button:active {
     font-size: 0.9rem;
     word-break: break-all;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.redeem-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+    display: none;
+}
+
+.redeem-btn:hover {
+    background-color: #219a52;
+}
+
+.redeem-btn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.money-animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+}
+
+.money {
+    position: absolute;
+    font-size: 2rem;
+    color: #27ae60;
+    animation: float 4s ease-in-out infinite;
+    opacity: 0;
+}
+
+.money:nth-child(1) { animation-delay: 0s; }
+.money:nth-child(2) { animation-delay: 0.2s; }
+.money:nth-child(3) { animation-delay: 0.4s; }
+.money:nth-child(4) { animation-delay: 0.6s; }
+.money:nth-child(5) { animation-delay: 0.8s; }
+.money:nth-child(6) { animation-delay: 1s; }
+.money:nth-child(7) { animation-delay: 1.2s; }
+.money:nth-child(8) { animation-delay: 1.4s; }
+.money:nth-child(9) { animation-delay: 1.6s; }
+.money:nth-child(10) { animation-delay: 1.8s; }
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    z-index: 1001;
+    animation: fadeInOut 3s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 } 
