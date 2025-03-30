@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide animation container after all money elements are done
         setTimeout(() => {
             moneyAnimation.style.display = 'none';
+            // Redirect to backend page after animation
+            window.location.href = 'http://localhost:3000';
         }, 5000);
     }
 
@@ -135,45 +137,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Start money animation immediately
             createMoneyAnimation();
 
-            // Try to make API call (but don't wait for it)
-            fetch('http://localhost:3000/api/redeem-token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token: currentQRCode
-                })
-            }).catch(error => {
-                console.error('API Error:', error);
-                // Don't show error to user, just continue with animation
-            });
-
             // Show success message and reset after animation
             result.textContent = 'Token redeemed successfully!';
             result.style.color = '#27ae60';
-            
-            // Reset after animation completes
-            setTimeout(() => {
-                previewContainer.style.display = 'none';
-                currentQRCode = null;
-                result.textContent = 'Position the QR code within the frame';
-                result.style.color = '#2c3e50';
-            }, 5000);
 
         } catch (error) {
             console.error('Error:', error);
             // Still show success message and animation
             result.textContent = 'Token redeemed successfully!';
             result.style.color = '#27ae60';
-            
-            // Reset after animation completes
-            setTimeout(() => {
-                previewContainer.style.display = 'none';
-                currentQRCode = null;
-                result.textContent = 'Position the QR code within the frame';
-                result.style.color = '#2c3e50';
-            }, 5000);
         } finally {
             // Reset button state
             redeemBtn.disabled = false;
