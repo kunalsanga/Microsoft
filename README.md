@@ -2,10 +2,12 @@
 
 A decentralized application (DApp) for managing recycling tokens on the blockchain. The project consists of a frontend web application with QR code scanning functionality and a backend server for token management.
 
+
+
 ## Project Demo
 Watch our project demo video to see Recyto in action:
+https://github.com/user-attachments/assets/f79461ae-dd14-4db1-b43d-944df6c1f209
 
-Uploading Recyto.mp4…
 
 
 ## Project Structure
