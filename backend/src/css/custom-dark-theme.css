@@ -1,0 +1,332 @@
+/* Custom Dark Theme with Robotic Styling for BottleCoin */
+
+/* Import Robotic Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;700&display=swap');
+
+/* Base Dark Theme */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Rajdhani', sans-serif;
+  line-height: 1.6;
+}
+
+/* Headings with Robotic Font */
+h1, h2, h3, h4, h5, h6, .panel-title {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  color: #00ffcc;
+}
+
+/* Override Bootstrap Panel Styling */
+.panel {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+  margin-bottom: 20px;
+}
+
+.panel-default > .panel-heading {
+  background-color: #252525;
+  border-color: #333;
+  color: #00ffcc;
+  border-bottom: 2px solid #00ffcc;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+/* Form Controls */
+.form-control {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  color: #e0e0e0;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 204, 0.25);
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  bottom: -50%;
+  left: -50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0));
+  transform: rotateZ(60deg) translate(-5em, 7.5em);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.btn:hover::after {
+  opacity: 1;
+  animation: sheen 1s forwards;
+}
+
+@keyframes sheen {
+  100% {
+    transform: rotateZ(60deg) translate(1em, -9em);
+  }
+}
+
+.btn-primary {
+  background-color: #2a7fff;
+  border-color: #2a7fff;
+}
+
+.btn-success {
+  background-color: #00cc88;
+  border-color: #00cc88;
+}
+
+.btn-default {
+  background-color: #444;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.btn:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Table Styling */
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #252525;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #1e1e1e;
+}
+
+.table th {
+  color: #00ffcc;
+  border-bottom: 2px solid #00ffcc;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+}
+
+.table td {
+  border-top: 1px solid #333;
+}
+
+/* Loader */
+#loader {
+  color: #00ffcc;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 2px;
+}
+
+/* Neon Highlights */
+strong {
+  color: #00ffcc;
+  font-weight: 600;
+}
+
+/* Additional Futuristic Elements */
+hr {
+  border-color: #00ffcc;
+  box-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+/* Transaction History Section */
+#transactionHistory {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Pet Template Styling */
+.panel-pet {
+  background-color: #1e1e1e;
+  transition: all 0.3s ease;
+}
+
+.panel-pet:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+
+/* Cyberpunk-inspired Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ffcc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ccaa;
+}
+
+/* Placeholder Text */
+::placeholder {
+  color: #777;
+  opacity: 1;
+}
+
+/* Focus outline */
+:focus {
+  outline: none !important;
+}
+
+/* Neon Text Effect */
+.neon-text {
+  color: #00ffcc;
+  text-shadow: 0 0 5px rgba(0, 255, 204, 0.5), 0 0 10px rgba(0, 255, 204, 0.3), 0 0 15px rgba(0, 255, 204, 0.2);
+  font-weight: 700;
+  animation: neon-pulse 2s infinite alternate;
+}
+
+@keyframes neon-pulse {
+  from {
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5), 0 0 10px rgba(0, 255, 204, 0.3), 0 0 15px rgba(0, 255, 204, 0.2);
+  }
+  to {
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.7), 0 0 20px rgba(0, 255, 204, 0.5), 0 0 30px rgba(0, 255, 204, 0.3);
+  }
+}
+
+/* Container Styling */
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Dark Theme Override for Text Muted */
+.text-muted {
+  color: #888;
+}
+
+/* Add Glowing Border Effect on Hover */
+.panel:hover {
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: #2a2a2a;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  background-color: #00ffcc;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+  background-size: 30px 30px;
+  animation: progress-animation 2s linear infinite;
+}
+
+@keyframes progress-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 30px 0; }
+}
+
+/* Circuit-like Border for Page Header */
+.row:first-of-type {
+  position: relative;
+}
+
+.row:first-of-type::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+}
+
+/* Enhance Image Styling */
+.img-rounded {
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+  transition: all 0.3s ease;
+}
+
+.img-rounded:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+}
+
+/* Logo Styling */
+.logo-container {
+  margin-bottom: 30px;
+}
+
+.logo-text {
+  font-size: 3rem;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.recyto-text {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-family: 'Rajdhani', sans-serif;
+  color: #aaa;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Add a glow around the logo */
+.logo-container::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 204, 0.15) 0%, rgba(0, 255, 204, 0) 70%);
+  z-index: -1;
+}
+
+/* Enhanced Form Labels */
+label {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00ffcc;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+} 
