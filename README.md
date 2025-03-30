@@ -6,7 +6,7 @@ A decentralized application (DApp) for managing recycling tokens on the blockcha
 
 ## Project Demo
 Watch our project demo video to see Recyto in action:
-https://github.com/kunalsanga/Microsoft/issues/1#issue-2959040964
+https://github.com/user-attachments/assets/9f554054-86ab-4638-8abf-0da42bd3380e
 
 
 
