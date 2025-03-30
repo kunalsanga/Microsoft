@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="qr-scan.css">
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Scanner</h1>
+        <div class="scanner-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div class="overlay">
+                <div class="scan-area"></div>
+            </div>
+        </div>
+        <div class="result-container">
+            <p id="result">Position the QR code within the frame</p>
+        </div>
+        <button id="captureBtn">Capture QR Code</button>
+        <div class="preview-container" id="previewContainer" style="display: none;">
+            <h2>Scanned QR Code</h2>
+            <img id="scannedImage" alt="Scanned QR Code">
+            <p id="qrContent"></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script src="qr-scan.js"></script>
+</body>
+</html> 
